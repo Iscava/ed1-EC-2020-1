@@ -44,14 +44,15 @@ void insere(int n, int c)
     }
 };
 
-Anao* busca(int n){
+Anao *busca(int n)
+{
 
-    Anao* atual = (Anao*) arya;
-    
-    while(atual != NULL && atual->n != n){
+    Anao *atual = (Anao *)arya;
+
+    while (atual != NULL && atual->n != n)
+    {
 
         atual = atual->prox;
-
     }
 
     return atual;
@@ -62,18 +63,15 @@ void saida(int **matriz, int c, int m, int numAnoesInicio)
     int k, vetor[c], y;
     for (y = 0; y < m; y++)
     {
-        Anao *atual = (Anao *)busca(numAnoesInicio+1);
+        Anao *atual = (Anao *)busca(numAnoesInicio + 1);
         Anao *elemento_a = NULL;
         Anao *elemento_b = NULL;
         Anao *aux = NULL;
-        printf("\nTeste %d\n", atual->n);
 
         while (atual)
         {
             if (atual->n - numAnoesInicio == matriz[y][0])
-            //printf("\nTeste do elemento atual %d        matriz: %d\n", atual->n, matriz[y][0] );
                 elemento_a = atual;
-            //printf("\nTeste do elemento atual %d        matriz: %d                elemento  %d\n", atual->n, matriz[y][0], elemento_a->n);
 
             if (atual->n - numAnoesInicio == matriz[y][1])
                 elemento_b = atual;
@@ -81,10 +79,8 @@ void saida(int **matriz, int c, int m, int numAnoesInicio)
             atual = atual->prox;
         }
 
-        printf("\nTeste\n");
-
         k = (elemento_b->n - elemento_a->n) + 1;
-        printf("\nValor de k: %d\n", k);
+
         int i1;
         for (i1 = 0; i1 < c; i1++)
         {
@@ -127,7 +123,7 @@ int main()
     scanf("%d", &t);
 
     vezes = t;
-    int inputs[t][2],  numeroAnoesTeste[t+1];
+    int inputs[t][2], numeroAnoesTeste[t + 1];
     numeroAnoesTeste[0] = 0;
     int ***Vector_fotos = malloc(t * sizeof(**Vector_fotos));
 
@@ -166,7 +162,7 @@ int main()
         Vector_fotos[count] = fotos;
         inputs[count][0] = numc;
         inputs[count][1] = m;
-        numeroAnoesTeste[count+1] = n;
+        numeroAnoesTeste[count + 1] = numeroAnoesTeste[count] + n;
 
         count++;
         t--;
