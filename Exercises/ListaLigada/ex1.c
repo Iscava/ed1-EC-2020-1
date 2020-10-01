@@ -60,7 +60,7 @@ Anao *busca(int n)
 
 void saida(int **matriz, int c, int m, int numAnoesInicio)
 {
-    int k, vetor[c], y;
+    int k, vetor[c], y, i;
     for (y = 0; y < m; y++)
     {
         Anao *atual = (Anao *)busca(numAnoesInicio + 1);
@@ -81,34 +81,32 @@ void saida(int **matriz, int c, int m, int numAnoesInicio)
 
         k = (elemento_b->n - elemento_a->n) + 1;
 
-        int i1;
-        for (i1 = 0; i1 < c; i1++)
+        for (i = 0; i < c; i++)
         {
-            vetor[i1] = 0;
+            vetor[i] = 0;
         }
 
-        int i2;
-        for (i2 = 0; i2 < c; i2++)
+        for (i = 0; i < c; i++)
         {
             aux = (Anao *)elemento_a;
             int x;
             for (x = 0; x < k; x++)
             {
-                if (aux->c == i2 + 1)
+                if (aux->c == i + 1)
                 {
-                    vetor[i2]++;
+                    vetor[i]++;
                 }
                 aux = aux->prox;
             }
         }
 
-        int maior = 0, cor = 0, i3;
-        for (i3 = 0; i3 < c; i3++)
+        int maior = 0, cor = 0;
+        for (i = 0; i < c; i++)
         {
-            if (vetor[i3] > maior)
+            if (vetor[i] > maior)
             {
-                maior = vetor[i3];
-                cor = i3 + 1;
+                maior = vetor[i];
+                cor = i + 1;
             }
         }
         maior > k / 2 ? printf("\nbonita %d", cor) : printf("\nfeia");
@@ -151,12 +149,12 @@ int main()
             fotos[lin] = malloc(2 * sizeof(*fotos[lin]));
         }
 
-        int i4;
-        for (i4 = 0; i4 < m; i4++)
+        int i;
+        for (i = 0; i < m; i++)
         {
             scanf("%d %d", &a, &b);
-            fotos[i4][0] = a;
-            fotos[i4][1] = b;
+            fotos[i][0] = a;
+            fotos[i][1] = b;
         }
 
         Vector_fotos[count] = fotos;
@@ -170,10 +168,10 @@ int main()
             fator = FALSE;
     }
 
-    int i5;
-    for (i5 = 0; i5 < vezes; i5++)
+    int i;
+    for (i = 0; i < vezes; i++)
     {
-        saida(Vector_fotos[i5], inputs[i5][0], inputs[i5][1], numeroAnoesTeste[i5]);
+        saida(Vector_fotos[i], inputs[i][0], inputs[i][1], numeroAnoesTeste[i]);
     }
 
     return 0;
