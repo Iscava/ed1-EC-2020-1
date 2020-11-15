@@ -167,35 +167,33 @@ int *verify(int d)
         ex[1] == ex[2] && ex[1] > ex[0])
     {
         if (pontv[0] == pontv[1] && pontv[0] == pontv[2] ||
-            pontv[0] == pontv[1] && pontv[0] < pontv[2] ||
-            pontv[0] == pontv[2] && pontv[0] < pontv[1] ||
-            pontv[1] == pontv[2] && pontv[1] < pontv[0])
+            pontv[0] == pontv[1] && ex[0] == ex[1] ||
+            pontv[0] == pontv[2] && ex[0] == ex[2] ||
+            pontv[1] == pontv[2] && ex[1] == ex[2] ||
+            pontv[2] < pontv[0] && ex[0] == ex[2] ||
+            pontv[2] < pontv[1] && ex[1] == ex[2])
         {
             res[0] = 2;
             res[1] = ex[2];
             res[2] = pontv[2];
         }
-        else if (pontv[0] < pontv[1] && pontv[0] < pontv[2])
+        else if (pontv[0] < pontv[1] && ex[0] == ex[1] ||
+                 pontv[0] < pontv[2] && ex[0] == ex[2])
         {
             res[0] = 0;
             res[1] = ex[0];
             res[2] = pontv[0];
         }
-        else if (pontv[1] < pontv[0] && pontv[1] < pontv[2])
+        else if (pontv[1] < pontv[0] && ex[1] == ex[0] ||
+                 pontv[1] < pontv[2] && ex[1] == ex[2])
         {
             res[0] = 1;
             res[1] = ex[1];
             res[2] = pontv[1];
         }
-        else if (pontv[2] < pontv[0] && pontv[2] < pontv[1])
-        {
-            res[0] = 2;
-            res[1] = ex[2];
-            res[2] = pontv[2];
-        }
     }
-    else if(){
-        
+    else if ()
+    {
     }
 
     int i;
