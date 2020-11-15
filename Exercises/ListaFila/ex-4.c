@@ -210,11 +210,37 @@ int *verify(int d)
         res[1] = ex[2];
         res[2] = pontv[2];
     }
+    return res;
+}
 
-    int i;
-    for (i = 0; i < 3; i++)
+void clear()
+{
+    johnPoint auxJohn = firstJohn, holdJohn;
+    while (auxJohn)
     {
+        holdJohn = auxJohn;
+        auxJohn = auxJohn->prev;
+        free(holdJohn);
     }
+    firstJohn = NULL;
+
+    jackPoint auxJack = firstJack, holdJack;
+    while (auxJack)
+    {
+        holdJack = auxJack;
+        auxJack = auxJack->prev;
+        free(holdJack);
+    }
+    firstJack = NULL;
+
+    jadePoint auxJade = firstJade, holdJade;
+    while (auxJade)
+    {
+        holdJade = auxJade;
+        auxJade = auxJade->prev;
+        free(holdJade);
+    }
+    firstJade = NULL;
 }
 
 void ascOrder(int *vetor, int p)
@@ -255,6 +281,10 @@ void descOrder(int *vetor, int p)
     }
 }
 
+void printRes(int **res)
+{
+}
+
 int main()
 {
     int i, z;
@@ -279,6 +309,7 @@ int main()
         {
             printf("\n%d", exDiff[i]);
         }
+        clear();
     }
     return 0;
 }
