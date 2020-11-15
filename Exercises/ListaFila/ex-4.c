@@ -112,17 +112,21 @@ void pushJade(int *vetor, int p)
     }
 }
 
-int *verify(int *vetor, int p, int d)
+int *verify(int d)
 {
+    int ex[3], pontv[3], res[3];
+
     johnPoint auxJohn = firstJohn;
     int pontJohn = 0, countJohn = 0, doneJohn = 0;
     while (auxJohn)
-    {   
+    {
         countJohn += auxJohn->exercise_time;
         if (countJohn < d)
         {
             pontJohn += countJohn;
             doneJohn++;
+            ex[0] = doneJohn;
+            pontv[0] = pontJohn;
         }
         auxJohn = auxJohn->prev;
     }
@@ -130,12 +134,14 @@ int *verify(int *vetor, int p, int d)
     jackPoint auxJack = firstJack;
     int pontJack = 0, countJack = 0, doneJack = 0;
     while (auxJack)
-    {   
+    {
         countJack += auxJack->exercise_time;
         if (countJack < d)
         {
             pontJack += countJack;
             doneJack++;
+            ex[1] = doneJack;
+            pontv[1] = pontJack;
         }
         auxJack = auxJack->prev;
     }
@@ -143,21 +149,59 @@ int *verify(int *vetor, int p, int d)
     jadePoint auxJade = firstJade;
     int pontJade = 0, countJade = 0, doneJade = 0;
     while (auxJade)
-    {   
+    {
         countJade += auxJade->exercise_time;
         if (countJade < d)
         {
             pontJade += countJade;
             doneJade++;
+            ex[2] = doneJade;
+            pontv[2] = pontJade
         }
         auxJade = auxJade->prev;
     }
 
-    int i;
-    for(){
+    if (ex[0] == ex[1] && ex[0] == ex[2] ||
+        ex[0] == ex[1] && ex[0] > ex[2] ||
+        ex[0] == ex[2] && ex[0] > ex[1] ||
+        ex[1] == ex[2] && ex[1] > ex[0])
+    {
+        if (pontv[0] == pontv[1] && pontv[0] == pontv[2] ||
+            pontv[0] == pontv[1] && pontv[0] < pontv[2] ||
+            pontv[0] == pontv[2] && pontv[0] < pontv[1] ||
+            pontv[1] == pontv[2] && pontv[1] < pontv[0])
+        {
+            res[0] = 2;
+            res[1] = ex[2];
+            res[2] = pontv[2];
+        }
+        else if (pontv[0] < pontv[1] && pontv[0] < pontv[2])
+        {
+            res[0] = 0;
+            res[1] = ex[0];
+            res[2] = pontv[0];
+        }
+        else if (pontv[1] < pontv[0] && pontv[1] < pontv[2])
+        {
+            res[0] = 1;
+            res[1] = ex[1];
+            res[2] = pontv[1];
+        }
+        else if (pontv[2] < pontv[0] && pontv[2] < pontv[1])
+        {
+            res[0] = 2;
+            res[1] = ex[2];
+            res[2] = pontv[2];
+        }
+    }
+    else if(){
         
     }
 
+    int i;
+    for (i = 0; i < 3; i++)
+    {
+    }
 }
 
 void ascOrder(int *vetor, int p)
@@ -218,10 +262,10 @@ int main()
         pushJack(exDiff, p);
         descOrder(exDiff, p);
         pushJade(exDiff, p);
-        //for (i = 0; i < p; i++)
-        //{
-        //    printf("\n%d", exDiff[i]);
-        //}
+        for (i = 0; i < p; i++)
+        {
+            printf("\n%d", exDiff[i]);
+        }
     }
     return 0;
 }
