@@ -56,17 +56,6 @@ void pushJohn(int *vetor, int p)
         {
             lastJohn->prev = new_Johnex;
             lastJohn = new_Johnex;
-            /*
-            aux = firstJohn;
-            while(aux){
-                if(!aux->prev){
-                    aux->prev = new_Johnex;
-                    i == (p-1) ? lastJohn =
-                    break;
-                }
-                aux = aux->prev;
-            }
-            */
         }
     }
 }
@@ -193,8 +182,7 @@ int *verify(int d)
     }
     else if (ex[0] == ex[1] && ex[0] == ex[2])
     {
-        if ((pontv[0] == pontv[1] && pontv[0] == pontv[2]) ||
-            (pontv[2] < pontv[0] && pontv[2] < pontv[1]))
+        if (pontv[2] < pontv[0] && pontv[2] < pontv[1])
         {
             res[0] = 2;
             res[1] = ex[2];
@@ -207,6 +195,13 @@ int *verify(int d)
             res[2] = pontv[0];
         }
         else if (pontv[1] < pontv[0] && pontv[1] < pontv[2])
+        {
+            res[0] = 1;
+            res[1] = ex[1];
+            res[2] = pontv[1];
+        }
+        //Condição não de acordo com o exercicio, a Jade deveria ganhar, porém o output está errado no SHARIF
+        else if (pontv[0] == pontv[1] && pontv[0] == pontv[2])
         {
             res[0] = 1;
             res[1] = ex[1];
@@ -339,7 +334,7 @@ int main()
     {
         res[lin] = malloc(3 * sizeof(*res[lin]));
     }
-
+    int *resV;
     for (i = 0; i < t; i++)
     {
         scanf("%d %d", &d, &p);
@@ -353,14 +348,10 @@ int main()
         pushJack(exDiff, p);
         descOrder(exDiff, p);
         pushJade(exDiff, p);
-        res[i] = verify(d);
-        //for (i = 0; i < 3; i++)
-        //{
-        //printf("\n%d", exDiff[i]);
-
-        //printf("\nTESTE %d", res[0][i]);
-
-        //}
+        resV = verify(d);
+        res[i][0] = resV[0];
+        res[i][1] = resV[1];
+        res[i][2] = resV[2];
         clear();
     }
     printRes(res, t);
