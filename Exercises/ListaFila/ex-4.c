@@ -4,6 +4,7 @@
 #define TRUE 1
 #define FALSE 0
 typedef int boolean;
+int res[3];
 
 // Lista do John
 typedef struct JohnRow
@@ -60,7 +61,7 @@ void pushJohn(int *vetor, int p)
             while(aux){
                 if(!aux->prev){
                     aux->prev = new_Johnex;
-                    i == (p-1) ? lastJohn = 
+                    i == (p-1) ? lastJohn =
                     break;
                 }
                 aux = aux->prev;
@@ -114,14 +115,14 @@ void pushJade(int *vetor, int p)
 
 int *verify(int d)
 {
-    int ex[3], pontv[3], res[3];
+    int ex[3], pontv[3];
 
     johnPoint auxJohn = firstJohn;
     int pontJohn = 0, countJohn = 0, doneJohn = 0;
     while (auxJohn)
     {
         countJohn += auxJohn->exercise_time;
-        if (countJohn < d)
+        if (countJohn <= d)
         {
             pontJohn += countJohn;
             doneJohn++;
@@ -136,7 +137,7 @@ int *verify(int d)
     while (auxJack)
     {
         countJack += auxJack->exercise_time;
-        if (countJack < d)
+        if (countJack <= d)
         {
             pontJack += countJack;
             doneJack++;
@@ -151,7 +152,7 @@ int *verify(int d)
     while (auxJade)
     {
         countJade += auxJade->exercise_time;
-        if (countJade < d)
+        if (countJade <= d)
         {
             pontJade += countJade;
             doneJade++;
@@ -161,31 +162,51 @@ int *verify(int d)
         auxJade = auxJade->prev;
     }
 
-    if (ex[0] == ex[1] && ex[0] == ex[2] ||
-        ex[0] == ex[1] && ex[0] > ex[2] ||
-        ex[0] == ex[2] && ex[0] > ex[1] ||
-        ex[1] == ex[2] && ex[1] > ex[0])
+    if ((ex[0] == ex[1] && ex[0] > ex[2]) ||
+        (ex[0] == ex[2] && ex[0] > ex[1]) ||
+        (ex[1] == ex[2] && ex[1] > ex[0]))
     {
-        if (pontv[0] == pontv[1] && pontv[0] == pontv[2] ||
-            pontv[0] == pontv[1] && ex[0] == ex[1] ||
-            pontv[0] == pontv[2] && ex[0] == ex[2] ||
-            pontv[1] == pontv[2] && ex[1] == ex[2] ||
-            pontv[2] < pontv[0] && ex[0] == ex[2] ||
-            pontv[2] < pontv[1] && ex[1] == ex[2])
+        if ((pontv[0] == pontv[1] && ex[0] == ex[1]) ||
+            (pontv[0] == pontv[2] && ex[0] == ex[2]) ||
+            (pontv[1] == pontv[2] && ex[1] == ex[2]) ||
+            (pontv[2] < pontv[0] && ex[0] == ex[2]) ||
+            (pontv[2] < pontv[1] && ex[1] == ex[2]))
         {
             res[0] = 2;
             res[1] = ex[2];
             res[2] = pontv[2];
         }
-        else if (pontv[0] < pontv[1] && ex[0] == ex[1] ||
-                 pontv[0] < pontv[2] && ex[0] == ex[2])
+        else if ((pontv[0] < pontv[1] && ex[0] == ex[1]) ||
+                 (pontv[0] < pontv[2] && ex[0] == ex[2]))
         {
             res[0] = 0;
             res[1] = ex[0];
             res[2] = pontv[0];
         }
-        else if (pontv[1] < pontv[0] && ex[1] == ex[0] ||
-                 pontv[1] < pontv[2] && ex[1] == ex[2])
+        else if ((pontv[1] < pontv[0] && ex[1] == ex[0]) ||
+                 (pontv[1] < pontv[2] && ex[1] == ex[2]))
+        {
+            res[0] = 1;
+            res[1] = ex[1];
+            res[2] = pontv[1];
+        }
+    }
+    else if (ex[0] == ex[1] && ex[0] == ex[2])
+    {
+        if ((pontv[0] == pontv[1] && pontv[0] == pontv[2]) ||
+            (pontv[2] < pontv[0] && pontv[2] < pontv[1]))
+        {
+            res[0] = 2;
+            res[1] = ex[2];
+            res[2] = pontv[2];
+        }
+        else if (pontv[0] < pontv[1] && pontv[0] < pontv[2])
+        {
+            res[0] = 0;
+            res[1] = ex[0];
+            res[2] = pontv[0];
+        }
+        else if (pontv[1] < pontv[0] && pontv[1] < pontv[2])
         {
             res[0] = 1;
             res[1] = ex[1];
@@ -284,8 +305,25 @@ void descOrder(int *vetor, int p)
     }
 }
 
-void printRes(int **res)
+void printRes(int **res, int t)
 {
+    int i;
+    for (i = 0; i < t; i++)
+        switch (res[i][0])
+        {
+        case 0:
+            printf("\nJohn %d %d", res[i][1], res[i][2]);
+            break;
+        case 1:
+            printf("\nJack %d %d", res[i][1], res[i][2]);
+            break;
+        case 2:
+            printf("\nJade %d %d", res[i][1], res[i][2]);
+            break;
+        default:
+            printf("\nERROR");
+            break;
+        }
 }
 
 int main()
@@ -294,6 +332,13 @@ int main()
     int t, d, p;
 
     scanf("%d", &t);
+
+    int **res = malloc(t * sizeof(*res));
+    int lin;
+    for (lin = 0; lin < t; lin++)
+    {
+        res[lin] = malloc(3 * sizeof(*res[lin]));
+    }
 
     for (i = 0; i < t; i++)
     {
@@ -308,11 +353,16 @@ int main()
         pushJack(exDiff, p);
         descOrder(exDiff, p);
         pushJade(exDiff, p);
-        for (i = 0; i < p; i++)
-        {
-            printf("\n%d", exDiff[i]);
-        }
+        res[i] = verify(d);
+        //for (i = 0; i < 3; i++)
+        //{
+        //printf("\n%d", exDiff[i]);
+
+        //printf("\nTESTE %d", res[0][i]);
+
+        //}
         clear();
     }
+    printRes(res, t);
     return 0;
 }
