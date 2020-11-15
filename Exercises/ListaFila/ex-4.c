@@ -14,7 +14,7 @@ typedef struct JohnRow
 
 typedef JohnRow_t *johnPoint;
 
-johnPoint firstJohn, lastJohn;
+johnPoint firstJohn = NULL, lastJohn = NULL;
 
 // Lista do Jack
 typedef struct JackRow
@@ -25,7 +25,7 @@ typedef struct JackRow
 
 typedef JackRow_t *jackPoint;
 
-jackPoint firstJack, lastJack;
+jackPoint firstJack = NULL, lastJack = NULL;
 
 // Lista da Jade
 typedef struct JadeRow
@@ -36,7 +36,7 @@ typedef struct JadeRow
 
 typedef JadeRow_t *jadePoint;
 
-jadePoint firstJade, lastJade;
+jadePoint firstJade = NULL, lastJade = NULL;
 
 void pushJohn(int *vetor, int p)
 {
@@ -223,6 +223,7 @@ void clear()
         free(holdJohn);
     }
     firstJohn = NULL;
+    lastJohn = NULL;
 
     jackPoint auxJack = firstJack, holdJack;
     while (auxJack)
@@ -232,6 +233,7 @@ void clear()
         free(holdJack);
     }
     firstJack = NULL;
+    lastJack = NULL;
 
     jadePoint auxJade = firstJade, holdJade;
     while (auxJade)
@@ -241,6 +243,7 @@ void clear()
         free(holdJade);
     }
     firstJade = NULL;
+    lastJade = NULL;
 }
 
 void ascOrder(int *vetor, int p)
